@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trae 使用说明书 · 法律与经济金融研究生版</title>
+<style>
+:root{
+  --bg:#f7f8fa; --panel:#fff; --ink:#151b23; --muted:#5d6b7a; --line:#e4e8ed;
+  --navy:#17395c; --navy2:#2b5a86; --amber:#a9781f; --amberBg:#fdf8ec;
+  --ok:#1e7a4c; --okBg:#ecf7f0; --warn:#a33f28; --warnBg:#fdeee9;
+  --mono:ui-monospace,"Cascadia Mono",Consolas,"Courier New",monospace;
+  --r:10px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,"Segoe UI","Microsoft YaHei","PingFang SC","Noto Sans CJK SC",sans-serif;
+  font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased;
+}
+a{color:var(--navy2);text-decoration:none}
+a:hover{text-decoration:underline}
+code{font-family:var(--mono);font-size:.9em;background:#eef1f5;border-radius:4px;padding:1px 5px;color:#26313d}
+
+/* ---------- 侧栏 ---------- */
+.side{
+  position:fixed;left:0;top:0;width:250px;height:100vh;overflow-y:auto;
+  background:#101c28;color:#c9d6e2;padding:26px 0 40px;z-index:20;
+}
+.brand{padding:0 22px 18px;border-bottom:1px solid #22333f}
+.brand b{display:block;color:#fff;font-size:17px;letter-spacing:.5px}
+.brand span{display:block;color:#7e94a8;font-size:12px;margin-top:4px}
+#toc{display:flex;flex-direction:column;padding:14px 12px}
+#toc a{
+  color:#a9bccd;font-size:13.5px;padding:7px 10px;border-radius:6px;
+  border-left:2px solid transparent;text-decoration:none;transition:.15s;
+}
+#toc a:hover{background:#19293a;color:#fff}
+#toc a.active{background:#1d3247;color:#fff;border-left-color:#d9a441}
+#toc .n{display:inline-block;width:24px;color:#66809a;font-family:var(--mono);font-size:11px}
+.side-foot{padding:16px 22px 0;color:#5f7488;font-size:11.5px;line-height:1.6;border-top:1px solid #22333f;margin-top:10px}
+
+/* ---------- 主体 ---------- */
+main{margin-left:250px}
+.wrap{max-width:880px;margin:0 auto;padding:0 40px 110px}
+
+/* ---------- 首屏 ---------- */
+.hero{padding:56px 0 40px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--amber);text-transform:uppercase}
+.hero h1{font-size:34px;line-height:1.3;margin:12px 0 14px;letter-spacing:-.5px}
+.hero p{color:var(--muted);margin:0 0 10px;max-width:640px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:28px 0 6px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.stat b{display:block;font-size:22px;color:var(--navy);font-family:var(--mono)}
+.stat span{font-size:12.5px;color:var(--muted)}
+
+/* ---------- 章节 ---------- */
+.sec{padding-top:46px}
+.sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+.sec-head .num{font-family:var(--mono);font-size:13px;color:var(--amber);letter-spacing:1px}
+.sec-head h2{font-size:24px;margin:0;letter-spacing:-.3px}
+.lead{color:var(--muted);margin:6px 0 20px;max-width:720px}
+h3{font-size:17px;margin:30px 0 10px;padding-left:10px;border-left:3px solid var(--navy2)}
+h4{font-size:15px;margin:20px 0 8px}
+p{margin:10px 0}
+ul,ol{margin:10px 0;padding-left:22px}
+li{margin:5px 0}
+.small{font-size:13.5px;color:var(--muted)}
+
+/* ---------- 组件 ---------- */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;margin:14px 0}
+.card h4{margin-top:0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}
+.grid .card,.grid3 .card{margin:0}
+.badge{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;border:1px solid;line-height:1.7;vertical-align:middle}
+.badge.ok{color:var(--ok);background:var(--okBg);border-color:#bfe3cd}
+.badge.warn{color:var(--warn);background:var(--warnBg);border-color:#f2c8bb}
+.badge.navy{color:var(--navy);background:#eef3f8;border-color:#cfdde9}
+
+.note{border-left:3px solid var(--navy2);background:#f3f7fb;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0}
+.note.ok{border-color:var(--ok);background:var(--okBg)}
+.note.warn{border-color:var(--warn);background:var(--warnBg)}
+.note p:first-child{margin-top:0}
+.note p:last-child{margin-bottom:0}
+
+table.t{width:100%;border-collapse:collapse;font-size:14px;margin:14px 0;background:var(--panel)}
+table.t th,table.t td{border-bottom:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+table.t th{background:#eef2f6;font-weight:600;font-size:13px;color:#33475b}
+table.t tr:last-child td{border-bottom:none}
+table.t code{background:transparent;padding:0}
+
+/* 提示词卡片 */
+.prompt{border:1px solid #eadcc0;background:var(--amberBg);border-radius:var(--r);padding:12px 14px;margin:14px 0}
+.prompt .ph{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.prompt .ph b{font-size:13px;color:var(--amber);letter-spacing:.5px}
+.prompt pre{margin:0;white-space:pre-wrap;word-break:break-word;font-family:var(--mono);font-size:13px;line-height:1.65;color:#3a3226}
+.btn{font:inherit;font-size:12.5px;cursor:pointer;border:1px solid #d8c9a8;background:#fff;color:#7a5a1c;
+  border-radius:6px;padding:4px 10px;white-space:nowrap;transition:.15s}
+.btn:hover{background:#fffdf7;border-color:#c2ab7d}
+.btn.solid{background:var(--navy);border-color:var(--navy);color:#fff}
+.btn.solid:hover{background:var(--navy2);border-color:var(--navy2)}
+
+/* 深链接卡片 */
+.open{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:13px 15px;margin:10px 0}
+.open .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.open .path{font-family:var(--mono);font-size:12.5px;color:#3b4b5c;flex:1 1 auto;min-width:0;overflow-wrap:anywhere}
+.open .acts{display:flex;gap:8px;flex:0 0 auto}
+a.open-link{display:inline-block;font-size:12.5px;background:var(--navy);color:#fff;border-radius:6px;padding:4px 11px;text-decoration:none}
+a.open-link:hover{background:var(--navy2);text-decoration:none}
+.open .desc{font-size:13px;color:var(--muted);margin-top:6px}
+
+/* 快捷键 */
+.kbd{font-family:var(--mono);font-size:12px;background:#fff;border:1px solid #ccd4dd;border-bottom-width:2px;border-radius:5px;padding:1px 6px}
+
+/* 模式三栏示意 */
+.wb{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:8px;margin:16px 0;font-size:12.5px}
+.wb div{background:#f3f6f9;border:1px dashed #c6d2de;border-radius:8px;padding:12px 10px;text-align:center;color:#3d5063}
+.wb div b{display:block;font-size:13px;color:var(--navy);margin-bottom:4px}
+
+/* 步骤流 */
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0;font-size:13.5px}
+.flow span{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:5px 13px}
+.flow i{color:#9aa8b6;font-style:normal}
+
+/* 回到顶部 */
+#top{position:fixed;right:22px;bottom:22px;width:42px;height:42px;border-radius:50%;
+  background:var(--navy);color:#fff;border:none;cursor:pointer;font-size:16px;opacity:0;pointer-events:none;transition:.25s;z-index:30}
+#top.show{opacity:.92;pointer-events:auto}
+
+/* Toast */
+#toast{position:fixed;left:50%;bottom:32px;transform:translate(-50%,20px);background:#1a2836;color:#fff;
+  font-size:13px;padding:10px 18px;border-radius:8px;opacity:0;pointer-events:none;transition:.25s;z-index:50;max-width:80vw;text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:980px){
+  .side{position:static;width:auto;height:auto;padding:18px 0 14px}
+  .brand{padding:0 18px 12px}
+  #toc{flex-direction:row;overflow-x:auto;padding:10px 12px;gap:6px}
+  #toc a{border:1px solid #24384b;border-left-width:1px;white-space:nowrap;padding:5px 11px;border-radius:999px}
+  #toc a.active{border-left-color:#24384b;background:#d9a441;color:#1a2733;font-weight:600}
+  #toc .n{display:none}
+  .side-foot{display:none}
+  main{margin-left:0}
+  .wrap{padding:0 18px 80px}
+  .hero{padding:32px 0 24px}
+  .hero h1{font-size:26px}
+  .stats{grid-template-columns:1fr 1fr}
+  .grid,.grid3{grid-template-columns:1fr}
+  .wb{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<aside class="side">
+  <div class="brand">
+    <b>Trae 使用说明书</b>
+    <span>法律 · 经济金融 研究生版</span>
+  </div>
+  <nav id="toc">
+    <a href="#s1"><span class="n">01</span>三件工具的分工</a>
+    <a href="#s2"><span class="n">02</span>十分钟上手 Trae</a>
+    <a href="#s3"><span class="n">03</span>四个用法档位</a>
+    <a href="#s4"><span class="n">04</span>SOLO 模式</a>
+    <a href="#s5"><span class="n">05</span>提示词四件套</a>
+    <a href="#s6"><span class="n">06</span>场景一：Stata 实证</a>
+    <a href="#s7"><span class="n">07</span>场景二：数据爬取</a>
+    <a href="#s8"><span class="n">08</span>场景三：案件对比</a>
+    <a href="#s9"><span class="n">09</span>场景四：改 Python</a>
+    <a href="#s10"><span class="n">10</span>四个示例项目</a>
+    <a href="#s11"><span class="n">11</span>边界与纪律</a>
+    <a href="#s12"><span class="n">12</span>速查表</a>
+  </nav>
+  <div class="side-foot">
+    本机实测 · Trae CN 1.107.1<br>
+    示例项目：<code style="background:#1b2c3d;color:#9fb4c7">examples/</code>
+  </div>
+</aside>
+
+<main>
+<div class="wrap">
+
+<!-- ============ 首屏 ============ -->
+<header class="hero">
+  <div class="kicker">User Manual · v1.0</div>
+  <h1>把 Trae 用成你的<br>研究助理，而不是聊天框</h1>
+  <p>这份说明书只解决一件事：让一个没写过 IDE 的法律／经济金融研究生，在两小时内能独立用它跑完 Stata 实证、抓一份数据、对比几份判决、修好一段 Python。</p>
+  <p class="small">全部内容离线可用；四个示例项目已在真机跑通，下载后可在本地一键复现。</p>
+  <div class="stats">
+    <div class="stat"><b>4</b><span>可运行示例</span></div>
+    <div class="stat"><b>9</b><span>单元测试</span></div>
+    <div class="stat"><b>3</b><span>合成判决书</span></div>
+    <div class="stat"><b>0</b><span>外部依赖</span></div>
+  </div>
+</header>
+
+<!-- ============ 01 ============ -->
+<section class="sec" id="s1">
+  <div class="sec-head"><span class="num">01</span><h2>三件工具的分工</h2></div>
+  <p class="lead">VS Code、PyCharm、Trae 不是三选一，而是三种角色。先把角色分清，就不会在"装哪个插件、在哪写代码"上反复纠结。</p>
+
+  <table class="t">
+    <thead><tr><th style="width:16%">工具</th><th style="width:30%">它是什么</th><th>在你手里的用途</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>VS Code</b></td>
+        <td>微软的开源编辑器，插件生态最大</td>
+        <td>当作"干净的地基"：装 Python、Stata 语法高亮、Markdown、Git。Trae 就是它的深度定制版，两者界面几乎一样。</td>
+      </tr>
+      <tr>
+        <td><b>PyCharm</b></td>
+        <td>JetBrains 的 Python 专用 IDE</td>
+        <td>只在"大型 Python 项目重构、调试断点"时用。写论文脚本、跑 Stata 时它太重，且对 Stata 几乎没有支持。</td>
+      </tr>
+      <tr>
+        <td><b>Trae CN</b></td>
+        <td>VS Code 内核 + 中文 AI 助手 + SOLO 工作台</td>
+        <td>日常主力。它能直接读你的整个项目、在终端跑命令、跨多个文件改代码，还能把"跑一遍看看"这件事自己完成。</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <p><b>一句话结论：</b>把 Trae 设为默认打开方式；VS Code 留着当备用和插件试验田；PyCharm 只在你需要重型 Python 工程时打开。</p>
+    <p class="small">三者的设置基本互通：Trae 首次启动可以导入 VS Code 的配置、快捷键与插件。</p>
+  </div>
+
+  <h3>为什么 Trae 对你是"变革"而不是"又一个编辑器"</h3>
+  <ul>
+    <li><b>它看得见上下文。</b>你打开的是整个 <code>trae-guide</code> 文件夹，它就知道 <code>02_did.do</code> 依赖 <code>01_clean.do</code> 产出的 <code>.dta</code>，不用你解释。</li>
+    <li><b>它能动手。</b>不只是给代码片段，而是直接写进文件、在终端执行、读报错、再改。</li>
+    <li><b>它把"我不知道这个命令怎么写"变成了"我说清楚要什么"。</b>对非法学/非计算机出身的人，这是最大的门槛削减。</li>
+  </ul>
+</section>
+
+<!-- ============ 02 ============ -->
+<section class="sec" id="s2">
+  <div class="sec-head"><span class="num">02</span><h2>十分钟上手 Trae</h2></div>
+  <p class="lead">不求学完所有功能，只求把"打开项目 → 提需求 → 看它改 → 自己验证"这条闭环走通一遍。</p>
+
+  <h3>第一步：打开文件夹，而不是打开文件</h3>
+  <p>菜单 <b>文件 → 打开文件夹</b>，选 <code>trae-guide</code>。这一步决定了 AI 的视野：只开一个文件时，它只能看见那一个文件；开了文件夹，它才能看到 <code>data/</code>、<code>output/</code>、<code>run_all.do</code> 之间的关系。</p>
+  <div class="note warn">
+    <p><b>新手最常见的错误：</b>双击某个 <code>.py</code> 打开，然后问"为什么它说找不到模块"。因为工作目录不对——终端要在项目根目录里跑。</p>
+  </div>
+
+  <h3>第二步：认准四块界面</h3>
+  <div class="grid">
+    <div class="card"><h4>左侧：资源管理器</h4><p class="small">文件树。点一下文件名就在中间打开。下面还有搜索（全局找关键词）、源代码管理（Git 改动）。</p></div>
+    <div class="card"><h4>中间：编辑器</h4><p class="small">写代码、看日志、看 Markdown。顶部标签页可以同时开很多个文件。</p></div>
+    <div class="card"><h4>下方：终端</h4><p class="small"><span class="kbd">Ctrl</span> + <span class="kbd">`</span> 呼出。你所有的 <code>python xxx.py</code>、Stata 批处理都在这里跑。</p></div>
+    <div class="card"><h4>右侧：AI 面板</h4><p class="small">提问、让它改代码的地方。顶部一般有模式切换（Chat / Builder / SOLO）。</p></div>
+  </div>
+
+  <h3>第三步：五个必须记住的快捷键</h3>
+  <table class="t">
+    <thead><tr><th style="width:30%">快捷键</th><th>作用</th><th style="width:34%">什么时候用</th></tr></thead>
+    <tbody>
+      <tr><td><span class="kbd">Ctrl</span> + <span class="kbd">P</span></td><td>按文件名快速跳转</td><td>项目文件多的时候，比在树里点快十倍</td></tr>
+      <tr><td><span class="kbd">Ctrl</span> + <span class="kbd">`</span></td><td>显示／隐藏终端</td><td>跑脚本、看报错</td></tr>
+      <tr><td><span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">P</span></td><td>命令面板</td><td>找不到某个功能时，直接搜中文/英文关键词</td></tr>
+      <tr><td><span class="kbd">Ctrl</span> + <span class="kbd">I</span></td><td>内联编辑（选中代码后）</td><td>只改几行时，比开侧栏对话更精准</td></tr>
+      <tr><td><span class="kbd">Ctrl</span> + <span class="kbd">S</span> / <span class="kbd">Ctrl</span> + <span class="kbd">Z</span></td><td>保存 / 撤销</td><td>AI 改坏了就撤销，别慌</td></tr>
+    </tbody>
+  </table>
+
+  <h3>第四步：确认你的运行环境</h3>
+  <p>在终端里敲 <code>python -V</code>，应看到 <code>Python 3.11.7</code>。如果版本不对或提示找不到命令，按 <span class="kbd">Ctrl</span>+<span class="kbd">Shift</span>+<span class="kbd">P</span>，搜 <b>Python: Select Interpreter</b>，选 <code>C:\Users\cheny\anaconda3\python.exe</code>。</p>
+  <p>Stata 不走插件，走命令行批处理（<code>StataMP-64.exe /e do run_all.do</code>）。本机已写好 <code>run_stata.ps1</code>：它会<b>自动找到 Stata 安装位置</b>、把工作目录切到脚本所在目录，再用 <code>-Wait</code> 等它真正跑完。你只要在终端执行 <code>.\run_stata.ps1</code>。</p>
+  <p class="small">自动探测失败（绿色版、装在非标准目录）时，脚本会提示你：把文件开头的 <code>$stata = $null</code> 改成实际路径，或先执行 <code>$env:STATA_EXE = "你的路径"</code>。</p>
+  <div class="note">
+    <p><b>记住这句话：</b>AI 负责写和改，<b>终端负责证明它真的能跑</b>。任何"应该可以"都不算完成。</p>
+  </div>
+</section>
+
+<!-- ============ 03 ============ -->
+<section class="sec" id="s3">
+  <div class="sec-head"><span class="num">03</span><h2>四个用法档位</h2></div>
+  <p class="lead">同一个 AI，用在四个不同"档位"上，效果差很多。选错档位，要么大炮打蚊子，要么让它在没看懂项目时乱改一通。</p>
+
+  <table class="t">
+    <thead><tr><th style="width:14%">档位</th><th style="width:26%">你在做什么</th><th style="width:30%">你需要提供</th><th>典型风险</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>① Chat</b><br><span class="badge navy">问答</span></td>
+        <td>问概念、让它解释一段看不懂的代码、把报错贴给它</td>
+        <td>问题 + 相关代码／报错原文</td>
+        <td>它可能没读你的项目就回答，结论泛泛</td>
+      </tr>
+      <tr>
+        <td><b>② Ctrl+I</b><br><span class="badge navy">内联</span></td>
+        <td>选中 3–20 行，说"把这里改成……"</td>
+        <td>选中的代码 + 明确的改法</td>
+        <td>选多了它会顺手改你没让它改的地方</td>
+      </tr>
+      <tr>
+        <td><b>③ Builder</b><br><span class="badge navy">智能体</span></td>
+        <td>给一个目标，让它跨多个文件改，并自己跑命令验证</td>
+        <td>目标 + 边界（只改哪些文件）+ 验收方式</td>
+        <td>改动面大，不看 diff 就点接受会很难回退</td>
+      </tr>
+      <tr>
+        <td><b>④ Rules + MCP</b><br><span class="badge navy">长期配置</span></td>
+        <td>把"我的写作规范／数据路径／禁用操作"写进规则文件；接入外部数据源</td>
+        <td>一次性写清规则，之后自动生效</td>
+        <td>规则写得太模糊等于没写；MCP 会带来外部访问</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="grid">
+    <div class="card">
+      <h4>建议的进阶顺序</h4>
+      <p class="small">先用一周档位 ① 和 ②，把"描述需求"练顺；再开档位 ③ 处理多文件任务；最后才写 Rules。一上来就用 ③，你还没有能力判断它改得对不对。</p>
+    </div>
+    <div class="card">
+      <h4>一个判断口诀</h4>
+      <p class="small"><b>能一句话说清"改成什么"</b> → 用 ②；<b>只能说清"要达成什么"</b> → 用 ③；<b>只是想知道"为什么"</b> → 用 ①。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 SOLO ============ -->
+<section class="sec" id="s4">
+  <div class="sec-head"><span class="num">04</span><h2>SOLO 模式：什么时候用，什么时候别用</h2></div>
+  <p class="lead">SOLO 不是"更强的 Chat"，而是另一种工作形态——它把 AI 从"坐在你旁边的顾问"变成"接手整件事的承包人"。理解这一点，比记住任何按钮位置都重要。</p>
+
+  <h3>它到底哪里不一样</h3>
+  <p>普通模式里，你是操作者：你选文件、你跑命令、AI 给你建议或改好代码，你再验证。SOLO 里，你只交目标，它自己排计划、自己动手、自己验收，你退到"审阅者"的位置。</p>
+
+  <div class="wb">
+    <div><b>左：会话</b>你和它对话、补充约束</div>
+    <div><b>中：计划 · 执行流</b>待办清单逐项推进，每步有状态</div>
+    <div><b>右：预览 / 终端</b>它跑的命令、起的服务、看到的画面</div>
+  </div>
+  <p class="small">不同版本的入口与布局略有差异，通常在 AI 面板顶部的模式选择器里，或侧栏的 SOLO 图标。第一次进入会新建一个任务工作台。</p>
+
+  <table class="t">
+    <thead><tr><th style="width:15%">维度</th><th style="width:42%">普通模式（Chat / Builder）</th><th>SOLO 模式</th></tr></thead>
+    <tbody>
+      <tr><td><b>形态</b></td><td>编辑器 + 侧栏对话，你是操作者</td><td>任务工作台：会话、计划执行流、预览终端三栏并列</td></tr>
+      <tr><td><b>交互单位</b></td><td>一句一问一答，围绕你选中的代码</td><td>交一个目标，它先出 Plan 与待办清单，再逐项执行</td></tr>
+      <tr><td><b>能力边界</b></td><td>在编辑器内读写文件、跑终端命令</td><td>可以接管编辑器之外的整机操作（Computer Use、录屏回放、IM 桥接）</td></tr>
+      <tr><td><b>交付</b></td><td>给你改好的代码，跑不跑取决于你</td><td>端到端：装依赖、跑脚本、起服务、用内置浏览器验收、失败自修复</td></tr>
+      <tr><td><b>风险模型</b></td><td>误改一两个文件，撤销即可</td><td>误动目录、误装全局包、误操作别的窗口；权限确认更密，你必须看 diff</td></tr>
+    </tbody>
+  </table>
+
+  <h3>什么时候用它</h3>
+  <div class="grid">
+    <div class="card">
+      <h4>① 搭新项目骨架</h4>
+      <p class="small">"建一个 Stata 实证项目：数据生成脚本、清洗 do、主回归 do、稳健性 do、一键运行脚本，目录分 data/output。" 这种从零到能跑的结构，正是它的强项。</p>
+    </div>
+    <div class="card">
+      <h4>② 端到端的小流程</h4>
+      <p class="small">"装依赖 → 跑脚本 → 报错就改 → 直到产出 CSV。" 你不用在报错和修改之间来回搬运，它自己闭环。</p>
+    </div>
+    <div class="card">
+      <h4>③ 批量、多文件的机械改动</h4>
+      <p class="small">"把 12 个脚本里的 <code>utf-8</code> 全部改成 <code>utf-8-sig</code>，并统一输出文件名。" 逐文件点开改会疯，交给它更稳。</p>
+    </div>
+    <div class="card">
+      <h4>④ 你暂时离开电脑</h4>
+      <p class="small">"我去开组会，你把这三份判决的要素表做出来，做完把结果放 output/ 并写个 README 说明。" 回来后你审阅，而不是从零开始。</p>
+    </div>
+  </div>
+
+  <h3>什么时候别用它</h3>
+  <div class="grid">
+    <div class="card">
+      <h4>① 未脱敏的当事人／企业数据</h4>
+      <p class="small">它能操作整机、能截屏、能读其他窗口。涉密卷宗、委托人信息、未公开的微观企业数据，<b>不要放进 SOLO 工作台</b>。先在只读副本上脱敏，再谈自动化。</p>
+    </div>
+    <div class="card">
+      <h4>② 需要精确复现的实证结果</h4>
+      <p class="small">论文表格必须你能解释每一个系数。让 SOLO 自己决定回归设定、自己判断显著性，你会在答辩时答不上来。实证请用普通模式改代码，自己看 log。</p>
+    </div>
+    <div class="card">
+      <h4>③ 法条与案号的核验</h4>
+      <p class="small">这类核验的正确答案只能来自官方文本。SOLO 再"自主"，也不能替代你打开国家法律法规数据库逐条对。它只能帮你缩小核对范围。</p>
+    </div>
+    <div class="card">
+      <h4>④ 只改一行代码</h4>
+      <p class="small">为了一个变量名进 SOLO，等于请工程队来拧一颗螺丝。选中那行按 <span class="kbd">Ctrl</span>+<span class="kbd">I</span> 就够了。</p>
+    </div>
+  </div>
+
+  <h3>推荐工作流：起草归它，定稿归你</h3>
+  <div class="flow">
+    <span>SOLO 起草骨架与流程</span><i>→</i>
+    <span>普通模式逐段精修</span><i>→</i>
+    <span>pytest / Stata log 回归验证</span><i>→</i>
+    <span>你签字（写进论文／文书）</span>
+  </div>
+  <p class="small">SOLO 的产出永远定位为"初稿"。它的价值是把你从搭建和搬运里解放出来，不是替你做判断。</p>
+
+  <h3>在 SOLO 里必须坚持的三条纪律</h3>
+  <ol>
+    <li><b>先让它出 Plan，你逐条删改后再放行。</b>计划阶段改一句话，比执行完再回滚十个文件便宜得多。</li>
+    <li><b>开工前声明数据边界。</b>原话可以是："<code>data/</code> 目录只读，任何产物写到 <code>output/</code>，禁止修改或删除原始文件。"</li>
+    <li><b>每完成一步要一次回执。</b>"把这一步改了哪些文件列出来，并给我 git diff。" 没有 diff 的"已完成"不算完成。</li>
+  </ol>
+
+  <div class="note">
+    <p><b>切换模式时的实际问题：</b>不同会话之间的上下文不共享。切回普通模式前，把结论落到文件里（比如 <code>NOTES.md</code>），而不是指望它记得另一个窗口说过什么。</p>
+  </div>
+
+  <h3>本机证据：SOLO 组件确实存在</h3>
+  <p>以下不是猜测，是在你这台机器上读到的：</p>
+  <ul class="small">
+    <li><code>D:\LenovoSoftstore\Install\Trae CN\resources\app\product.json</code> → <code>version: 1.107.1</code>，含 <code>soloBuiltinExtensions</code>：<code>byted-solo.integrations-extended</code>、<code>byted-solo.builtin-mcp</code>、<code>cloudide.icube-im-bridge</code>。</li>
+    <li><code>extensions\byted-solo.builtin-mcp\package.json</code> → Computer Use（<code>icube.common.commands.computerUse.*</code>，含窗口捕获与应用白名单）与 Record &amp; Replay（<code>recordReplay.start/stop</code>）。</li>
+    <li>也就是说，"能操作编辑器之外的东西"是内置能力，不是第三方插件，所以它会明确向你索要权限——这些弹窗请认真读，不要一路点允许。</li>
+  </ul>
+</section>
+
+<!-- ============ 05 ============ -->
+<section class="sec" id="s5">
+  <div class="sec-head"><span class="num">05</span><h2>提示词四件套</h2></div>
+  <p class="lead">你不需要学"提示词工程"，只需要每次把四件事说清楚：<b>角色、目标、约束、验收</b>。缺哪一件，它就会在哪一件上自由发挥。</p>
+
+  <table class="t">
+    <thead><tr><th style="width:14%">要素</th><th style="width:26%">回答什么问题</th><th>例句</th></tr></thead>
+    <tbody>
+      <tr><td><b>角色</b></td><td>你希望它站在谁的角度</td><td>你是熟悉 Stata 18 与因果推断的实证研究者</td></tr>
+      <tr><td><b>目标</b></td><td>最终要得到什么产物</td><td>把 <code>02_did.do</code> 改成三列递进回归并导出表格</td></tr>
+      <tr><td><b>约束</b></td><td>不许做什么、必须遵守什么</td><td>不改数据清洗逻辑；不加新依赖；只动这一个文件</td></tr>
+      <tr><td><b>验收</b></td><td>怎样算成功</td><td>跑完 log 里三列都输出，且 <code>output/tab_did.rtf</code> 存在</td></tr>
+    </tbody>
+  </table>
+
+  <div class="prompt">
+    <div class="ph"><b>可直接复制的模板</b><button class="btn" data-copy="你是【角色】。请【目标】。约束：1) 【不许做什么】；2) 【必须遵守什么】；3) 只改【文件范围】。验收标准：【可观察的结果】。动手前先读相关文件，列出你打算改哪些文件，等我确认再改。">复制</button></div>
+    <pre>你是【角色】。请【目标】。
+约束：1) 【不许做什么】；2) 【必须遵守什么】；3) 只改【文件范围】。
+验收标准：【可观察的结果】。
+动手前先读相关文件，列出你打算改哪些文件，等我确认再改。</pre>
+  </div>
+
+  <h3>反例：为什么"帮我看看这个代码"没有用</h3>
+  <div class="grid">
+    <div class="card">
+      <h4><span class="badge warn">差</span> 帮我优化一下这个脚本</h4>
+      <p class="small">它不知道"优化"指速度、可读性还是结果正确性，于是会大改结构、引入不存在的包，你还不好意思拒绝。</p>
+    </div>
+    <div class="card">
+      <h4><span class="badge ok">好</span> 这个脚本跑 3000 行要 4 分钟</h4>
+      <p class="small">请只改 <code>parse_local.py</code> 里 <code>dedupe()</code> 的实现，把 O(n²) 换成集合去重；不改输出列名与顺序；改完告诉我怎么用同一份 fixtures 验证结果条数不变。</p>
+    </div>
+  </div>
+
+  <h3>三句万能补充</h3>
+  <ul>
+    <li>"先读文件再动手，不要凭猜测写代码。"</li>
+    <li>"改动前列出你要改的文件和理由。"</li>
+    <li>"改完告诉我怎么验证，并给出验证命令。"</li>
+  </ul>
+</section>
+
+<!-- ============ 06 ============ -->
+<section class="sec" id="s6">
+  <div class="sec-head"><span class="num">06</span><h2>场景一：Stata 科研实证</h2></div>
+  <p class="lead">目标不是"让 AI 写个回归"，而是"让 AI 帮你把一条可复现的实证流水线搭起来，并且每一段你都能讲清楚"。</p>
+
+  <div class="flow">
+    <span>00 生成／导入数据</span><i>→</i>
+    <span>01 清洗 · 缩尾 · 声明面板</span><i>→</i>
+    <span>02 双向固定效应 DID</span><i>→</i>
+    <span>03 稳健性 · 事件研究 · 安慰剂</span><i>→</i>
+    <span>导出表格</span>
+  </div>
+
+  <table class="t">
+    <thead><tr><th style="width:24%">文件</th><th>作用</th></tr></thead>
+    <tbody>
+      <tr><td><code>00_make_data.py</code></td><td>生成 300 家企业 × 2010–2020 的合成面板（固定随机种子，可复现），输出 <code>data/panel.csv</code></td></tr>
+      <tr><td><code>01_clean.do</code></td><td><code>import delimited</code>、<code>destring</code>、<code>isid</code> 查重、<code>xtset</code> 声明面板；按年做 1%/99% 缩尾，存 <code>data/panel_clean.dta</code></td></tr>
+      <tr><td><code>02_did.do</code></td><td>三列递进回归：<code>xtreg esg did, fe</code> → 加控制变量 → 加年份固定效应，聚类到 <code>city_code</code>，<code>estimates table</code> 输出，并尝试 <code>esttab</code> 导出 RTF</td></tr>
+      <tr><td><code>03_robust.do</code></td><td>换聚类层级、事件研究（以 <code>rel = -1</code> 为基期）、安慰剂（把政策时点提前到 2013，只用 ≤2014 样本）</td></tr>
+      <tr><td><code>run_all.do</code> / <code>run_stata.ps1</code></td><td>依次执行三步；PowerShell 脚本负责调起 <code>StataMP-64.exe /e do run_all.do</code>，日志落到 <code>run_all.log</code></td></tr>
+    </tbody>
+  </table>
+
+  <div class="note ok">
+    <p><b>本机实际跑出来的结果：</b>三列模型中 <code>did</code> 系数均为 <b>0.179</b>，在 1% 水平显著；事件研究可看平行趋势；安慰剂检验 <code>fake_did = 0.006</code>，不显著——说明主结果是"真政策"带来的，而不是趋势。</p>
+    <p class="small">这些数字来自合成数据，只用于演示流程，不能写进论文。</p>
+  </div>
+
+  <h3>用 Trae 做实证的正确姿势</h3>
+  <ol>
+    <li><b>先让它读，不让它写。</b>"读 <code>01_clean.do</code> 和 <code>02_did.do</code>，用中文解释每一步在干什么、为什么这样设定。"</li>
+    <li><b>再让它改一处。</b>用 <span class="kbd">Ctrl</span>+<span class="kbd">I</span> 选中聚类那一行，说"把聚类层级从 <code>city_code</code> 换成 <code>industry_code</code>"。</li>
+    <li><b>每次都自己看 log。</b>AI 说"跑通了"不算，<code>run_all.log</code> 里出现 <code>r(198)</code>、<code>r(111)</code> 这类错误码就是没跑通。</li>
+  </ol>
+
+  <div class="prompt">
+    <div class="ph"><b>示例提示词：读懂模型设定</b><button class="btn" data-copy="你是熟悉 Stata 18 的实证研究者。请只读 examples/stata/02_did.do，用中文解释三列回归各自控制了哪些固定效应、聚类层级是什么、为什么这样递进。不要改代码。如果某一列存在设定风险，指出来并说明理由。">复制</button></div>
+    <pre>你是熟悉 Stata 18 的实证研究者。
+请只读 examples/stata/02_did.do，用中文解释三列回归各自控制了哪些固定效应、
+聚类层级是什么、为什么这样递进。不要改代码。
+如果某一列存在设定风险，指出来并说明理由。</pre>
+  </div>
+
+  <div class="open">
+    <div class="row">
+      <span class="path">examples\stata\02_did.do</span>
+      <span class="badge ok">示例文件</span>
+      <span class="acts">
+        <button class="btn" data-copy="examples\stata\02_did.do">复制路径</button>
+      </span>
+    </div>
+    <div class="desc">主回归脚本。配合 <code>run_all.log</code> 一起看：先看 log 的结果，再回头读代码。</div>
+  </div>
+
+  <div class="open">
+    <div class="row">
+      <span class="path">examples\stata\run_all.log</span>
+      <span class="badge ok">示例文件</span>
+      <span class="acts">
+        <button class="btn" data-copy="examples\stata\run_all.log">复制路径</button>
+      </span>
+    </div>
+    <div class="desc">完整运行日志（约 34 KB）。搜 <code>did</code> 看系数，搜 <code>r(</code> 看有没有报错。</div>
+  </div>
+</section>
+
+<!-- ============ 07 ============ -->
+<section class="sec" id="s7">
+  <div class="sec-head"><span class="num">07</span><h2>场景二：数据爬取</h2></div>
+  <p class="lead">爬虫的正确入门顺序是"先解析本地快照，再请求真实接口"。顺序反了，你会在网络错误和选择器错误之间反复怀疑人生。</p>
+
+  <div class="grid">
+    <div class="card">
+      <h4>第一级：本地 HTML 解析</h4>
+      <p class="small"><code>parse_local.py</code> 读 <code>fixtures/page1.html</code> 与 <code>page2.html</code>，用 BeautifulSoup 抓列表，按案号去重，写 <code>output/cases_from_html.csv</code>。</p>
+      <p class="small"><b>实测：</b>第 1 页 5 条 + 第 2 页 5 条，第 2 页故意重复 1 条 → <b>去重后 9 条</b>。</p>
+    </div>
+    <div class="card">
+      <h4>第二级：真实开放接口</h4>
+      <p class="small"><code>fetch_macro.py</code> 调世界银行 Open Data API，抓 GDP、人均 GDP、城镇化率、失业率（2005–2023），带分页、3 次重试、0.5 秒限速。</p>
+      <p class="small"><b>实测：</b>4 个指标去空值后 <b>76 条观测</b>，并留了一份 <code>output/raw/</code> 原始 JSON 快照。</p>
+    </div>
+  </div>
+
+  <div class="note warn">
+    <p><b>合规红线（这一节请务必逐条读）</b></p>
+    <ul class="small" style="margin-bottom:0">
+      <li><b>先看规则：</b>目标站点的 <code>robots.txt</code> 与用户协议。不许抓的，一行都别抓。</li>
+      <li><b>限速：</b>示例里每页 sleep 0.5 秒。把对方服务器压垮，性质就变了。</li>
+      <li><b>不绕过：</b>登录、验证码、付费墙、反爬机制，绕过即可能违法。</li>
+      <li><b>只取公开、非敏感信息：</b>涉及个人信息时，《个人信息保护法》《数据安全法》直接适用。</li>
+      <li><b>留快照：</b>原始返回存 <code>raw/</code>，既为了复现，也为了日后能说明"数据是哪天、从哪来"。</li>
+    </ul>
+  </div>
+
+  <h3>把 HTML 表格变成论文能用的数据</h3>
+  <p>抓下来只是原料。<code>pandas</code> 读 CSV → 统一单位与缺失值标记 → 输出面板格式，这一段建议在普通模式里一步步做，每步都打印 <code>df.shape</code> 和 <code>df.head()</code>，确认形状没变。</p>
+
+  <div class="prompt">
+    <div class="ph"><b>示例提示词：先本地后线上</b><button class="btn" data-copy="你是熟悉 requests + BeautifulSoup 的数据工程助手。请读 examples/scraper/parse_local.py，把数据源从本地 fixtures 换成真实网址（我先给你网址和 robots.txt 结论）。约束：保留现有去重逻辑与输出列；每页之间 sleep 1 秒；失败重试 3 次；不要绕过任何登录或验证码。验收：输出 CSV 行数与本地快照一致。">复制</button></div>
+    <pre>你是熟悉 requests + BeautifulSoup 的数据工程助手。
+请读 examples/scraper/parse_local.py，把数据源从本地 fixtures 换成真实网址
+（我先给你网址和 robots.txt 结论）。
+约束：保留现有去重逻辑与输出列；每页之间 sleep 1 秒；失败重试 3 次；
+不要绕过任何登录或验证码。
+验收：输出 CSV 行数与本地快照一致。</pre>
+  </div>
+
+  <div class="open">
+    <div class="row">
+      <span class="path">examples\scraper\parse_local.py</span>
+      <span class="badge ok">示例文件</span>
+      <span class="acts">
+        <button class="btn" data-copy="examples\scraper\parse_local.py">复制路径</button>
+      </span>
+    </div>
+    <div class="desc">重点看 <code>parse_one()</code> 的选择器写法与 <code>dedupe()</code> 的去重逻辑。</div>
+  </div>
+
+  <div class="open">
+    <div class="row">
+      <span class="path">examples\scraper\fetch_macro.py</span>
+      <span class="badge ok">示例文件</span>
+      <span class="acts">
+        <button class="btn" data-copy="examples\scraper\fetch_macro.py">复制路径</button>
+      </span>
+    </div>
+    <div class="desc">翻页 + 重试 + 限速的完整写法，可以直接套到别的开放 API 上。</div>
+  </div>
+</section>
+
+<!-- ============ 08 ============ -->
+<section class="sec" id="s8">
+  <div class="sec-head"><span class="num">08</span><h2>场景三：法律案件对比</h2></div>
+  <p class="lead">这个场景最危险，也最适合展示"AI 该怎么用"：它可以帮你把三份判决书的要素摆成一张表，但<b>它说的每一条法条都必须回到官方文本核对</b>。</p>
+
+  <div class="flow">
+    <span>extract.py 抽要素</span><i>→</i>
+    <span>compare.py 横向对比 + 理由 diff</span><i>→</i>
+    <span>check_citations.py 引注核验</span><i>→</i>
+    <span>你人工核对官方文本</span>
+  </div>
+
+  <table class="t">
+    <thead><tr><th style="width:26%">文件</th><th>产出与要点</th></tr></thead>
+    <tbody>
+      <tr><td><code>extract.py</code></td><td>正则抽取案号、法院、案由、裁判日期、诉请金额、援引法条、结果倾向 → <code>output/elements.csv</code></td></tr>
+      <tr><td><code>compare.py</code></td><td>生成要素横向对比表，并用 <code>difflib</code> 对 <code>case_a</code> 与 <code>case_c</code> 的【裁判理由】做差异，把"义务主体 / 相对人是否善意"的说理分岔标出来 → <code>output/comparison.md</code></td></tr>
+      <tr><td><code>check_citations.py</code></td><td>把判决书里的援引与 <code>refs/law_articles.json</code> 比对，输出"命中／未收录"两态清单</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note ok">
+    <p><b>本机实测：</b>3 份合成判决书（股东回购部分改判 / 公司回购因未减资被驳回 / 公司担保因相对人非善意改判），共 <b>12 处援引</b>，命中 11 处，未收录 1 处——《公司法》第一百四十二条（示例条文库故意未收，用来演示这一分支）。</p>
+    <p class="small">"未收录"≠"引错"，只表示示例条文库没收这条。这正是工具的正确用法：<b>缩小人工核对范围，而不是替代人工核对</b>。</p>
+  </div>
+
+  <h3>防幻觉三条</h3>
+  <ol>
+    <li><b>只认本地或官方文本。</b>把条文放进 <code>refs/</code> 或让它在国家法律法规数据库里检索；不接受"根据民法典第五百八十五条……"这种凭记忆生成的引注。</li>
+    <li><b>命中也只是第一步。</b>还要确认：法律名称是否现行有效、条文序号是否因修法变动、引用内容是否与条文原意一致。</li>
+    <li><b>AI 生成的法条与案号一律标"待核验"。</b>在你逐条核对完之前，不许出现在正文里。</li>
+  </ol>
+
+  <div class="prompt">
+    <div class="ph"><b>示例提示词：只做搬运，不做推测</b><button class="btn" data-copy="你是法律文书分析助手。请读 examples/caselaw/cases 下的三份判决书，做一张要素对比表：案号、法院、案由、裁判日期、诉请金额、援引法条、结果倾向。每一项都要能指回原文句子；找不到的写“未提取”，不要推测。援引法条请单独列一份清单，我会自己去官方数据库核对。">复制</button></div>
+    <pre>你是法律文书分析助手。请读 examples/caselaw/cases 下的三份判决书，
+做一张要素对比表：案号、法院、案由、裁判日期、诉请金额、援引法条、结果倾向。
+每一项都要能指回原文句子；找不到的写“未提取”，不要推测。
+援引法条请单独列一份清单，我会自己去官方数据库核对。</pre>
+  </div>
+
+  <div class="open">
+    <div class="row">
+      <span class="path">examples\caselaw\compare.py</span>
+      <span class="badge ok">示例文件</span>
+      <span class="acts">
+        <button class="btn" data-copy="examples\caselaw\compare.py">复制路径</button>
+      </span>
+    </div>
+    <div class="desc">生成对比表与裁判理由 diff。先跑 <code>extract.py</code>，再跑它。</div>
+  </div>
+
+  <div class="open">
+    <div class="row">
+      <span class="path">examples\caselaw\output\comparison.md</span>
+      <span class="badge ok">示例文件</span>
+      <span class="acts">
+        <button class="btn" data-copy="examples\caselaw\output\comparison.md">复制路径</button>
+      </span>
+    </div>
+    <div class="desc">已生成的成品：一张要素表 + 一段改判理由的 diff。</div>
+  </div>
+</section>
+
+<!-- ============ 09 ============ -->
+<section class="sec" id="s9">
+  <div class="sec-head"><span class="num">09</span><h2>场景四：改 Python 代码</h2></div>
+  <p class="lead">这是最适合练手的场景，因为它有<b>客观的验收标准</b>：9 个单元测试。红变绿，就是改对了。你不需要看懂全部代码，也能判断它有没有真的修好。</p>
+
+  <table class="t">
+    <thead><tr><th style="width:30%">位置</th><th>埋的坑</th><th style="width:26%">症状</th></tr></thead>
+    <tbody>
+      <tr><td><code>normalize_case_no()</code></td><td>全角转半角的映射方向写反了</td><td>案号里的括号怎么都规整不了</td></tr>
+      <tr><td><code>char_bigrams()</code></td><td>取的是单字集合，不是二元组</td><td>相似度算出来虚高</td></tr>
+      <tr><td><code>jaccard()</code></td><td>分母用了 <code>len(sa)</code> 而非并集</td><td>结果恒为 1 或明显偏大</td></tr>
+      <tr><td><code>extract_amount()</code></td><td>正则不认千分位逗号与"万元"</td><td>120 万被判成 120</td></tr>
+      <tr><td><code>summarize_judgments()</code></td><td>空列表直接除零</td><td>批量跑时突然崩在最后一批</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <p><b>本机实测：</b><code>python -m pytest -q</code> → <b>5 failed, 4 passed</b>；直接 <code>python case_utils.py</code> 会在最后抛 <code>ZeroDivisionError</code>。目标是把 9 个测试全部变成绿。</p>
+  </div>
+
+  <h3>四步修法（不要让它一次性全改）</h3>
+  <ol>
+    <li><b>先跑测试，看红在哪。</b>把失败输出整段贴给它，让它解释每个失败对应哪个函数。</li>
+    <li><b>一次只修一个函数。</b>选中那个函数按 <span class="kbd">Ctrl</span>+<span class="kbd">I</span>，说清"只改这个函数，不改测试"。</li>
+    <li><b>每改一次就跑测试。</b>红数在减少才算进展；如果红数变多，立刻撤销。</li>
+    <li><b>全绿之后要求解释。</b>"用中文说明这五处修改各自为什么能修好对应测试"，答不上来就说明你没真正掌握。</li>
+  </ol>
+
+  <div class="prompt">
+    <div class="ph"><b>示例提示词：带着测试改代码</b><button class="btn" data-copy="你是 Python 工程师。tests/test_case_utils.py 是我的验收标准，不许修改测试文件。请只改 case_utils.py，一次只修一个函数，每次改完告诉我跑哪条命令验证、预期几个测试转绿。如果我的测试本身写错了，先告诉我，不要擅自改测试来迁就代码。">复制</button></div>
+    <pre>你是 Python 工程师。tests/test_case_utils.py 是我的验收标准，不许修改测试文件。
+请只改 case_utils.py，一次只修一个函数，
+每次改完告诉我跑哪条命令验证、预期几个测试转绿。
+如果我的测试本身写错了，先告诉我，不要擅自改测试来迁就代码。</pre>
+  </div>
+
+  <div class="open">
+    <div class="row">
+      <span class="path">examples\pyfix\case_utils.py</span>
+      <span class="badge ok">示例文件</span>
+      <span class="acts">
+        <button class="btn" data-copy="examples\pyfix\case_utils.py">复制路径</button>
+      </span>
+    </div>
+    <div class="desc">5 个 bug 分布在 5 个函数里。行号约 29 / 44 / 58 / 73 / 92。</div>
+  </div>
+
+  <div class="open">
+    <div class="row">
+      <span class="path">examples\pyfix\tests\test_case_utils.py</span>
+      <span class="badge ok">示例文件</span>
+      <span class="acts">
+        <button class="btn" data-copy="examples\pyfix\tests\test_case_utils.py">复制路径</button>
+      </span>
+    </div>
+    <div class="desc">9 个测试就是你的验收清单。先读它，比读源码更快理解每个函数该干什么。</div>
+  </div>
+</section>
+
+<!-- ============ 10 ============ -->
+<section class="sec" id="s10">
+  <div class="sec-head"><span class="num">10</span><h2>四个示例项目</h2></div>
+  <p class="lead">四个示例都在本站 <code>examples/</code> 目录下，可整包下载。放到本机任意位置，用 Trae「文件 → 打开文件夹」打开即可。</p>
+
+  <div class="open">
+    <div class="row">
+      <span class="path">examples.zip</span>
+      <span class="badge navy">整包下载</span>
+      <span class="acts"><a class="open-link" href="examples.zip" download>下载</a></span>
+    </div>
+    <div class="desc">四个示例的全部源码、数据与产出文件。解压后得到一个 <code>examples/</code> 文件夹。</div>
+  </div>
+
+  <div class="note">
+    <p><b>路径约定：</b>下文路径都写成相对位置（如 <code>examples\stata\02_did.do</code>），前面的电脑目录由你自己定。本站<b>不含</b>可点击的 Trae 深链接——那种链接只对装了 Trae、路径又完全一致的机器有效，放上来对着别人就是死按钮。</p>
+    <p class="small">正确用法：把示例文件夹放到本机任意位置 → 在 Trae 里「文件 → 打开文件夹」打开它 → 点卡片上的「复制路径」，按 <span class="kbd">Ctrl</span>+<span class="kbd">O</span> 粘贴。</p>
+  </div>
+
+  <div class="open">
+    <div class="row">
+      <span class="path">examples\stata\</span>
+      <span class="badge ok">示例目录</span>
+      <span class="acts">
+        <button class="btn" data-copy="examples\stata">复制路径</button>
+      </span>
+    </div>
+    <div class="desc"><b>① Stata 实证</b>：跑 <code>run_stata.ps1</code>，看 <code>run_all.log</code> 与 <code>output/tab_did.rtf</code>。三列 <code>did = 0.179***</code>。</div>
+  </div>
+
+  <div class="open">
+    <div class="row">
+      <span class="path">examples\scraper\</span>
+      <span class="badge ok">示例目录</span>
+      <span class="acts">
+        <button class="btn" data-copy="examples\scraper">复制路径</button>
+      </span>
+    </div>
+    <div class="desc"><b>② 数据爬取</b>：<code>python parse_local.py</code>（10 条 → 去重 9 条）与 <code>python fetch_macro.py</code>（76 条观测）。</div>
+  </div>
+
+  <div class="open">
+    <div class="row">
+      <span class="path">examples\caselaw\</span>
+      <span class="badge ok">示例目录</span>
+      <span class="acts">
+        <button class="btn" data-copy="examples\caselaw">复制路径</button>
+      </span>
+    </div>
+    <div class="desc"><b>③ 案件对比</b>：依次 <code>extract.py</code> → <code>compare.py</code> → <code>check_citations.py</code>（12 处援引，命中 11）。</div>
+  </div>
+
+  <div class="open">
+    <div class="row">
+      <span class="path">examples\pyfix\</span>
+      <span class="badge ok">示例目录</span>
+      <span class="acts">
+        <button class="btn" data-copy="examples\pyfix">复制路径</button>
+      </span>
+    </div>
+    <div class="desc"><b>④ 改 Python</b>：<code>python -m pytest -q</code> 起手，5 failed / 4 passed，目标是 9 passed。</div>
+  </div>
+
+  <h3>第一次打开的正确顺序</h3>
+  <ol>
+    <li>先把放示例项目的整个文件夹打开（不是单独开一个文件）。</li>
+    <li>在终端 <code>cd examples\pyfix</code>，跑一次 <code>python -m pytest -q</code>，看到红色——这是你的"起点"。因为最快见效。</li>
+    <li>再去 <code>caselaw</code> 跑三件套，感受"脚本流水线"。</li>
+    <li>最后进 <code>stata</code>，跑 <code>.\run_stata.ps1</code>，打开 log 对着代码读。</li>
+  </ol>
+</section>
+
+<!-- ============ 11 ============ -->
+<section class="sec" id="s11">
+  <div class="sec-head"><span class="num">11</span><h2>边界与纪律</h2></div>
+  <p class="lead">工具的上限由能力决定，下限由纪律决定。下面这些不是"注意事项"，而是会直接影响你论文与执业风险的红线。</p>
+
+  <div class="grid">
+    <div class="card">
+      <h4>它会编，而且编得很像</h4>
+      <p class="small">法条序号、案号、统计口径、API 参数，都可能凭空生成。凡是"事实性"内容，一律要求给出处，并自己核。</p>
+    </div>
+    <div class="card">
+      <h4>数据不要随手扔进去</h4>
+      <p class="small">未脱敏的卷宗、当事人信息、未公开的企业微观数据，不进 AI 上下文。先脱敏，或只给结构描述。</p>
+    </div>
+    <div class="card">
+      <h4>原始数据只读</h4>
+      <p class="small">所有脚本只读 <code>data/</code>，产物写 <code>output/</code>。这样最坏情况也只是重跑，不是重找数据。</p>
+    </div>
+    <div class="card">
+      <h4>可复现优先</h4>
+      <p class="small">固定随机种子、写 <code>requirements.txt</code>、记录 Stata 版本与命令。半年后你自己也要能重跑。</p>
+    </div>
+  </div>
+
+  <h3>三个"别做"</h3>
+  <ul>
+    <li><b>别在没看 diff 时点"接受全部"。</b>改动面越大，越要逐个文件看——你签的是自己的名字。</li>
+    <li><b>别让 AI 直接改原始数据文件。</b>包括 <code>.dta</code>、<code>.csv</code>、判决书原件。只让它改脚本。</li>
+    <li><b>别把"它说跑通了"当成跑通了。</b>你要亲眼看终端输出、log 结尾、产物文件是否存在。</li>
+  </ul>
+
+  <div class="note warn">
+    <p><b>关于 Stata 的一个具体提醒：</b>AI 很容易写出 <code>egen pctile()</code> 这种"看起来对但 Stata 没有"的命令。凡是它给的 Stata 代码，先看 log 里有没有 <code>command … is unrecognized</code>，再决定信不信。</p>
+  </div>
+</section>
+
+<!-- ============ 12 ============ -->
+<section class="sec" id="s12">
+  <div class="sec-head"><span class="num">12</span><h2>速查表</h2></div>
+  <p class="lead">卡住的时候，先在这张表里找一行，再决定要不要开新对话。</p>
+
+  <table class="t">
+    <thead><tr><th style="width:26%">我想……</th><th style="width:18%">用哪个档位</th><th>一句话提示词</th><th style="width:20%">去哪看结果</th></tr></thead>
+    <tbody>
+      <tr><td>看懂一段代码在干什么</td><td>Chat</td><td>"逐行解释这段，指出可能的坑，不要改"</td><td>直接读回答</td></tr>
+      <tr><td>只改几行</td><td>Ctrl+I</td><td>"把这里改成……，其他不动"</td><td>编辑器里的 diff</td></tr>
+      <tr><td>跑 Stata 实证</td><td>终端 + Chat</td><td>"读 02_did.do，解释三列设定"</td><td><code>run_all.log</code></td></tr>
+      <tr><td>抓一份数据</td><td>Builder</td><td>"先解析本地快照，再换真实接口，限速 1 秒"</td><td><code>output/*.csv</code></td></tr>
+      <tr><td>对比几份判决</td><td>Builder + 人工</td><td>"做要素表，找不到写未提取，不要推测"</td><td><code>output/comparison.md</code></td></tr>
+      <tr><td>修一段坏代码</td><td>Ctrl+I + 测试</td><td>"只改这个函数，不许改测试"</td><td><code>pytest -q</code> 的红绿</td></tr>
+      <tr><td>从零搭一个项目</td><td>SOLO</td><td>"先出 Plan 和文件清单，等我确认"</td><td>工作台的执行流</td></tr>
+      <tr><td>把偏好固化下来</td><td>Rules</td><td>"以后所有脚本输出用 utf-8-sig"</td><td>规则文件</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note ok">
+    <p><b>最后一句：</b>先让它证明能跑，再让它看起来漂亮。研究里，"能复现"永远比"写得优雅"重要。</p>
+  </div>
+</section>
+
+</div>
+</main>
+
+<button id="top" title="回到顶部">↑</button>
+<div id="toast"></div>
+
+<script>
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('#toc a'));
+  var secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (!e.isIntersecting) return;
+        var id = '#' + e.target.id;
+        links.forEach(function(l){ l.classList.toggle('active', l.getAttribute('href') === id); });
+      });
+    }, {rootMargin: '-15% 0px -70% 0px', threshold: 0});
+    secs.forEach(function(s){ if (s) io.observe(s); });
+  }
+
+  var toastEl = document.getElementById('toast'), timer = null;
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(timer);
+    timer = setTimeout(function(){ toastEl.classList.remove('show'); }, 2600);
+  }
+
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest('[data-copy]');
+    if (!btn) return;
+    var text = btn.getAttribute('data-copy');
+    function ok(){ toast('已复制：' + text); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(ok, function(){ fallback(text, ok); });
+    } else {
+      fallback(text, ok);
+    }
+  });
+
+  function fallback(text, done){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); done(); } catch (err) { toast('复制失败，请手动选择'); }
+    document.body.removeChild(ta);
+  }
+
+
+  var top = document.getElementById('top');
+  window.addEventListener('scroll', function(){
+    top.classList.toggle('show', window.scrollY > 600);
+  }, {passive: true});
+  top.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+})();
+</script>
+</body>
+</html>
